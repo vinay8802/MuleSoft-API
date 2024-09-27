@@ -1,0 +1,48 @@
+#%RAML 1.0 Library
+usage: for input and output
+types:
+  aws-request-message:
+    type: object
+    properties:
+      bucketName:
+        type: string
+        example: "uho-covid-docs"
+        required: true
+      folderPath:
+        type: string
+        example: "identity"
+        required: true
+      fileName:
+        type: string
+        example: "uho-covid-docs"
+        required: true
+      document:
+        type: string
+        required: true
+        example: "iVBORw0KGgoAAAANSUhEUgAAAOIAAACRCAYAAADepmS4AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjw"
+  aws-response-message:
+    type: object
+    properties:
+          code:
+            type: integer
+            description: Document uploaded successfully
+            required: true 
+          message:
+            description: Success
+            type: string
+            required: true
+          description:
+            description: A human readable, comprehensive explanation of the occurred exception
+            type: string
+            required: false
+          dateTime:
+            description: The date-time stamp of the occurred error
+            type: datetime
+            required: true
+          transactionId:
+            description: Internal identifier of the transaction that failed
+            type: string
+            required: true
+    
+    
+          
