@@ -1,0 +1,46 @@
+#%RAML 1.0
+title: aws-rest-api
+version: v1
+baseUri: http://localhost:8081/customer
+
+securitySchemes:
+  basic: !include /exchange_modules/a0a1c353-17a5-422d-b85d-8591697229ae/fms-basic-auth/1.0.0/fms-basic-auth.raml
+traits:
+  x-correlation-id: !include /exchange_modules/a0a1c353-17a5-422d-b85d-8591697229ae/global_header_correlation-id/1.0.0/global_header_correlation-id.raml
+  x-transaction-id: !include /exchange_modules/a0a1c353-17a5-422d-b85d-8591697229ae/global_header_transaction-id/1.0.1/global_header_transaction-id.raml
+uses:
+  aws-library: aws-library/aws-library.raml
+  common-data-error: exchange_modules/a0a1c353-17a5-422d-b85d-8591697229ae/global_error_handler/1.0.0/global_error_handler.raml
+  
+/document:
+  post:
+    is: [x-correlation-id, x-transaction-id]
+    securedBy: [basic]
+    body:
+      application/json:
+        type: aws-library.aws-request-message
+        example: !include examples/input.json
+    responses:
+      200:
+        body:
+          application/json:
+            type: aws-library.aws-response-message
+            example:  !include examples/200-output.json            
+      500:
+        body:
+          application/json:  
+            type: common-data-error.error-response-type
+            example: !include examples/500-error.json
+      503:
+        body:
+          application/json:  
+            type: common-data-error.error-response-type
+            example: !include examples/503.json
+      400:
+        body:
+          application/json:  
+            type: common-data-error.error-response-type
+            example: !include examples/400.json
+        
+            
+        
